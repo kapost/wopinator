@@ -3,6 +3,8 @@ $:.unshift File.expand_path('../../lib', __FILE__)
 require 'wopinator'
 require 'rspec/its'
 
+DISCOVERY_XML_FILE = File.join(File.dirname(__FILE__), 'discovery.xml').freeze
+
 # Requires supporting ruby files with custom matchers and macros, etc, in
 # spec/support/ and its subdirectories. Files matching `spec/**/*_spec.rb` are
 # run as spec files by default. This means that files in spec/support that end

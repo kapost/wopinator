@@ -1,4 +1,3 @@
-require 'base64'
 require 'openssl'
 
 module Wopinator
@@ -7,21 +6,35 @@ module Wopinator
 
     def initialize(value, modulus, exponent)
       self.value = value
-      # MSZ: document this
-      self.modulus = Base64.decode64(modulus).unpack('H*')[0].to_i(16)
-      self.exponent = Base64.decode64(exponent).unpack('H*')[0].to_i(16)
+      self.modulus = convert(modulus)
+      self.exponent = convert(exponent)
     end
 
     def verify(signature, expected_signature)
+      # We verify the two signatures using a SHA256 digest. Both signatures are
+      # base 64 encoded and need to be decoded before the verification can happen
       digest = OpenSSL::Digest::SHA256.new
-      public_key.verify(digest, Base64.decode64(signature.to_s), expected_signature.to_s)
+      public_key.verify(digest, decode64(signature), decode64(expected_signature))
     end
 
     private
 
     attr_writer :value, :modulus, :exponent
 
+    def convert(value)
+      # The modulus and the exponent of the RSA key are base 64 encoded
+      # strings containing hexadecimal values with their most significant
+      # bit stored first (big endian)
+      decode64(value).unpack('H*')[0].to_i(16)
+    end
+
+    def decode64(value)
+      value.to_s.unpack('m*')[0]
+    end
+
     def public_key
+      # In order to reconstruct the RSA public key we use the modulus and exponent
+      # since there is no way to import the base 64 encoded binary blob
       @_public_key ||= OpenSSL::PKey::RSA.new.tap do |key|
         key.n = OpenSSL::BN.new(modulus)
         key.e = OpenSSL::BN.new(exponent)

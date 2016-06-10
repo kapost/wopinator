@@ -9,7 +9,11 @@ module Wopinator
     end
 
     def to_time
-      # MSZ: document this *magic*
+      # This is a 64 bit (long int) timestamp with a resolution
+      # of 100 nano seconds. In order to convert this back into a
+      # unix timestamp that we can work with, we substract
+      # the "delta" and then multiply the resulting value by the 
+      # inverse of 1e7 (10000000) which is 1e-7 (0.0000001)
       @_time ||= Time.at((@_value - 621355968000000000) * 1e-7)
     end
   end

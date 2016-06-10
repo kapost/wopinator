@@ -1,19 +1,22 @@
 module Wopinator
   class Signature
-    attr_reader :access_token, :url, :timestamp
+    attr_reader :access_token, :timestamp, :url
 
-    def initialize(access_token, url, timestamp)
+    def initialize(access_token, timestamp, url)
       self.access_token = access_token
-      self.url = url
       self.timestamp = timestamp.to_i
+      self.url = url
     end
 
     def to_s
-      bytes.pack('C*')
+      # Pack bytes as unsigned chars and then base 64 encode the result
+      [bytes.pack('C*')].pack('m*')
     end
 
     def bytes
-      # MSZ: document this *magic*
+      # WOPI timestamps are 64 bit (big-endian) long ints
+      # Ruby has no *pack* format to allow this by default, so we just pack it
+      # and then reverse the bytes manually, thus obtaining the desired result
       timestamp_bytes = [timestamp].pack('Q').bytes.reverse # 64 bit big-endian
 
       bytes = []
@@ -27,6 +30,12 @@ module Wopinator
       bytes += timestamp_bytes
 
       bytes
+    end
+
+    def verify(signature, old_signature, proof_key, old_proof_key)
+      proof_key.verify(signature, self) ||
+      proof_key.verify(old_signature, self) ||
+      old_proof_key.verify(signature, self)
     end
 
     private

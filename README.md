@@ -1,6 +1,6 @@
 Wopinator
 =========
-TODO
+A collection of helpers for interacting with Microsoft's WOPI.
 
 Contribute
 ----------

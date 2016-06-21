@@ -1,6 +1,7 @@
 $:.unshift File.expand_path('../../lib', __FILE__)
 
 require 'wopinator'
+require 'timecop'
 require 'rspec/its'
 
 DISCOVERY_XML_FILE = File.join(File.dirname(__FILE__), 'discovery.xml').freeze

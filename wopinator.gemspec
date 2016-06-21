@@ -25,4 +25,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency 'rspec', '~> 3.4'
   s.add_development_dependency 'rspec-its'
   s.add_development_dependency 'rubygems-tasks'
+  s.add_development_dependency 'timecop'
 end

@@ -41,6 +41,7 @@ GEM
       rspec-support (~> 3.4.0)
     rspec-support (3.4.1)
     rubygems-tasks (0.2.4)
+    timecop (0.8.0)
 
 PLATFORMS
   ruby
@@ -50,6 +51,7 @@ DEPENDENCIES
   rspec (~> 3.4)
   rspec-its
   rubygems-tasks
+  timecop
   wopinator!
 
 BUNDLED WITH

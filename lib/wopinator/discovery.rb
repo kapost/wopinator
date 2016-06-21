@@ -14,10 +14,11 @@ module Wopinator
       test:       'https://onenote.officeapps-df.live.com/hosting/discovery'
     }.freeze
 
-    attr_reader :url, :cache, :expires_in
+    attr_reader :url, :env, :cache, :expires_in
 
     def initialize(options = {})
-      self.url        = URLS.fetch(options.fetch(:env, :production))
+      self.env        = options.fetch(:env, default_env)
+      self.url        = URLS.fetch(env)
       self.cache      = options.fetch(:cache, NullCache.new)
       self.expires_in = options.fetch(:expires_in, EXPIRES_IN)
     end
@@ -47,7 +48,7 @@ module Wopinator
 
     private
 
-    attr_writer :url, :cache, :expires_in
+    attr_writer :url, :env, :cache, :expires_in
 
     def proof_keys
       @_proof_keys ||= locate(:wopi_discovery, :proof_key)
@@ -71,6 +72,10 @@ module Wopinator
       @_raw_xml ||= cache.fetch(CACHE_KEY, expires_in: expires_in) do
         HTTPClient.get(url).body
       end
+    end
+
+    def default_env
+      @_defaul_env ||= (ENV['WOPI_ENV'] == 'test' ? :test : :production)
     end
   end
 end

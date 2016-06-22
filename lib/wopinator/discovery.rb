@@ -82,7 +82,7 @@ module Wopinator
     end
 
     def format_favicon_url(app)
-      app.favIconUrl
+      app.favIconUrl || app.fav_icon_url
     end
 
     def format_action_url(action, src = nil)

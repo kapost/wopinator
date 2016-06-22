@@ -4,8 +4,8 @@ PATH
     wopinator (0.0.1)
       httparty
       json
-      nokogiri (= 1.6.7)
-      nori (>= 2.6.0)
+      nokogiri (>= 1.6.7)
+      nori (>= 1.1.0)
       rake (>= 10.0)
 
 GEM
@@ -16,11 +16,13 @@ GEM
       json (~> 1.8)
       multi_xml (>= 0.5.2)
     json (1.8.3)
-    mini_portile2 (2.0.0)
+    mini_portile2 (2.1.0)
     multi_xml (0.5.5)
-    nokogiri (1.6.7)
-      mini_portile2 (~> 2.0.0.rc2)
+    nokogiri (1.6.8)
+      mini_portile2 (~> 2.1.0)
+      pkg-config (~> 1.1.7)
     nori (2.6.0)
+    pkg-config (1.1.7)
     rake (11.2.2)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)

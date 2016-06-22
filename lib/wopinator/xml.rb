@@ -6,10 +6,18 @@ module Wopinator
   class Xml
     class << self
       def parse(xml)
-        format(Nori.new(parser: :nokogiri).parse(xml))
+        format(try_parse(xml))
       end
 
       private
+
+      def try_parse(xml)
+        if Nori.respond_to?(:new)
+          Nori.new(parser: :nokogiri).parse(xml)
+        else
+          Nori.parse(xml, :nokogiri)
+        end
+      end
 
       def format(xml)
         OpenStruct.new.tap do |s|

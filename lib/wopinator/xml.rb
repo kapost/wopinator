@@ -22,7 +22,7 @@ module Wopinator
       def format(xml)
         OpenStruct.new.tap do |s|
           xml.each do |k, v|
-            key = k.sub(/^@/, '')
+            key = k.to_s.sub(/^@/, '')
 
             if v.is_a?(Hash)
               s[key] = format(v)

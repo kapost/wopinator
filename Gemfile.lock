@@ -5,7 +5,7 @@ PATH
       httparty
       json
       nokogiri (>= 1.6.7)
-      nori (>= 1.1.0)
+      nori (>= 1.1.5)
       rake (>= 10.0)
 
 GEM

@@ -2,6 +2,7 @@ PATH
   remote: .
   specs:
     wopinator (0.0.1)
+      addressable (>= 2.4.0)
       httparty
       json
       nokogiri (>= 1.6.7)
@@ -11,6 +12,7 @@ PATH
 GEM
   remote: https://rubygems.org/
   specs:
+    addressable (2.4.0)
     diff-lcs (1.2.5)
     httparty (0.13.7)
       json (~> 1.8)

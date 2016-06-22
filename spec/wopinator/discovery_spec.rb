@@ -48,4 +48,16 @@ RSpec.describe Wopinator::Discovery do
       expect(subject.apps.size).not_to eql(0)
     end
   end
+
+  context '.resolve' do
+    it 'should return app metadata by action name and extension' do
+      metadata = subject.resolve('view', 'wopitest', 'https://contoso.com/wopi/files/13666')
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+      expect(metadata.action_url).to include('WopiTestFrame.aspx')
+      expect(metadata.action_url).to include('contoso.com')
+    end
+  end
 end

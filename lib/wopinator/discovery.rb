@@ -1,3 +1,5 @@
+require 'addressable/uri'
+require 'cgi'
 require 'wopinator/null_cache'
 require 'wopinator/xml'
 require 'wopinator/proof_key'
@@ -35,7 +37,18 @@ module Wopinator
       @_apps ||= locate(:wopi_discovery, :net_zone, :apps)
     end
 
+    def resolve(name, ext, src = nil)
+      resolve_cache["#{name}_#{ext}"] ||= OpenStruct.new.tap do |s|
+        app, action = find_app_and_action(name, ext)
+        if app && action
+          s.favicon_url = format_favicon_url(app)
+          s.action_url = format_action_url(action, src)
+        end
+      end
+    end
+
     def reload!
+      @_resolve_cache = nil
       @_raw_xml       = nil
       @_xml           = nil
       @_proof_keys    = nil
@@ -49,6 +62,34 @@ module Wopinator
     private
 
     attr_writer :url, :env, :cache, :expires_in
+
+    def resolve_cache
+      @_resolve_cache ||= {}
+    end
+
+    def find_app_and_action(name, ext)
+      action = nil
+
+      app = apps.detect do |a|
+        action = find_action(a, name, ext)
+      end
+
+      [app, action]
+    end
+
+    def find_action(app, name, ext)
+      app.actions.detect { |action| action.name == name && action.ext == ext }
+    end
+
+    def format_favicon_url(app)
+      app.favIconUrl
+    end
+
+    def format_action_url(action, src = nil)
+      uri = Addressable::URI.parse(action.urlsrc)
+      uri.query_values = src ? { "WOPISrc" => CGI.escape(src) } : nil
+      uri.to_s
+    end
 
     def proof_keys
       @_proof_keys ||= locate(:wopi_discovery, :proof_key)

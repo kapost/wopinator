@@ -12,7 +12,7 @@ RSpec.describe Wopinator::Request do
   let(:params) { { 'access_token' => access_token } }
   let(:env) { {
     'HTTP_X_WOPI_PROOF' => proof,
-    'HTTP_X_WOPI_PROOF_OLD' => old_proof,
+    'HTTP_X_WOPI_PROOFOLD' => old_proof,
     'HTTP_X_WOPI_TIMESTAMP' => timestamp
   } }
 

@@ -50,7 +50,7 @@ module Wopinator
     end
 
     def old_proof
-      @_old_proof ||= value_for_header(:proof_old)
+      @_old_proof ||= value_for_header(:proofold)
     end
 
     def value_for_header(name)

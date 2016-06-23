@@ -1,4 +1,5 @@
 require 'addressable/uri'
+require 'ostruct'
 require 'cgi'
 require 'wopinator/null_cache'
 require 'wopinator/xml'
@@ -87,7 +88,7 @@ module Wopinator
 
     def format_action_url(action, src = nil)
       uri = Addressable::URI.parse(action.urlsrc)
-      uri.query_values = src ? { "WOPISrc" => CGI.escape(src) } : nil
+      uri.query_values = src ? { "WOPISrc" => src } : nil
       uri.to_s
     end
 

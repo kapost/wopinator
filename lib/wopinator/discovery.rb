@@ -1,6 +1,5 @@
 require 'addressable/uri'
 require 'ostruct'
-require 'cgi'
 require 'wopinator/null_cache'
 require 'wopinator/xml'
 require 'wopinator/proof_key'

@@ -38,7 +38,7 @@ module Wopinator
     end
 
     def resolve(name, ext, src = nil)
-      resolve_cache["#{name}_#{ext}"] ||= OpenStruct.new.tap do |s|
+      resolve_cache["#{name}_#{ext}_#{src.nil?}"] ||= OpenStruct.new.tap do |s|
         app, action = find_app_and_action(name, ext)
         if app && action
           s.favicon_url = format_favicon_url(app)
@@ -86,9 +86,19 @@ module Wopinator
     end
 
     def format_action_url(action, src = nil)
-      uri = Addressable::URI.parse(action.urlsrc)
-      uri.query_values = src ? { "WOPISrc" => src } : nil
+      uri = parse_url(action.urlsrc)
+      uri.query_values = format_action_query(uri.query_values, src)
       uri.to_s
+    end
+
+    def format_action_query(query, src = nil)
+      query ||= {}
+      query['WOPISrc'] = src if src
+      query.any? ? query : nil
+    end
+
+    def parse_url(url)
+      Addressable::URI.parse(url.gsub(/&#38;/, '&').gsub(/<.*?=.*?>/, '').gsub(/(\?|&)$/, ''))
     end
 
     def proof_keys

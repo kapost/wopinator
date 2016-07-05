@@ -1,6 +1,7 @@
 RSpec.describe Wopinator::Discovery do
   subject { described_class.new(env: :test) }
   let(:response) { double(:response, code: 200, body: File.read(DISCOVERY_XML_FILE)) }
+  let(:src) { 'https://contoso.com/wopi/files/13666' }
 
   before do
     allow(Wopinator::HTTPClient).to receive(:get).at_most(:twice).with(subject.url).and_return(response)
@@ -51,13 +52,52 @@ RSpec.describe Wopinator::Discovery do
 
   context '.resolve' do
     it 'should return app metadata by action name and extension' do
-      metadata = subject.resolve('view', 'wopitest', 'https://contoso.com/wopi/files/13666')
+      metadata = subject.resolve('view', 'wopitest', src)
 
       expect(metadata).not_to be_nil
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
       expect(metadata.action_url).to include('WopiTestFrame.aspx')
       expect(metadata.action_url).to include('contoso.com')
+    end
+
+    it 'should remove placeholder query parameters from action url' do
+      metadata = subject.resolve('editnew', 'pptx', src)
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+
+      expected_query = { 'New' => '1', 'PowerPointView' => 'EditView', 'WOPISrc' => src }
+      query = Addressable::URI.parse(metadata.action_url).query_values
+
+      expect(query).to be_an(Hash)
+      expect(query.size).to eql(3)
+      expect(query).to include(expected_query)
+
+      metadata = subject.resolve('view', 'wopitest', src)
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+
+      expected_query = { 'WOPISrc' => src }
+
+      query = Addressable::URI.parse(metadata.action_url).query_values
+
+      expect(query).to be_an(Hash)
+      expect(query.size).to eql(1)
+      expect(query).to include(expected_query)
+
+      metadata = subject.resolve('edit', 'docx')
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+
+      query = Addressable::URI.parse(metadata.action_url).query_values
+
+      expect(query).to be_nil
     end
   end
 end

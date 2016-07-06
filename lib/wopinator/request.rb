@@ -1,6 +1,7 @@
 require 'wopinator/timestamp'
 require 'wopinator/signature'
 require 'wopinator/discovery'
+require 'wopinator/headers'
 
 module Wopinator
   class Request
@@ -42,19 +43,19 @@ module Wopinator
     end
 
     def timestamp
-      @_timestamp ||= Timestamp.new(value_for_header(:timestamp))
+      @_timestamp ||= Timestamp.new(headers.get(:timestamp))
     end
 
     def proof
-      @_proof ||= value_for_header(:proof)
+      @_proof ||= headers.get(:proof)
     end
 
     def old_proof
-      @_old_proof ||= value_for_header(:proofold)
+      @_old_proof ||= headers.get(:proofold)
     end
 
-    def value_for_header(name)
-      raw_request.env["HTTP_X_WOPI_#{name.to_s.upcase}"]
+    def headers
+      @_headers ||= Headers.new(raw_request)
     end
 
     def value_for_param(name)

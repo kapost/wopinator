@@ -1,6 +1,17 @@
 RSpec.describe Wopinator::FileInfo do
   subject { described_class.new }
 
+  context '.any?' do
+    it 'should return true if at least one property is set' do
+      subject.OwnerId = '13'
+      expect(subject.any?).to be_truthy
+    end
+
+    it 'should return false if no property is set' do
+      expect(subject.any?).to be_falsy
+    end
+  end
+
   context '.to_json' do
     it 'should return valid json' do
       subject.OwnerId = '13'

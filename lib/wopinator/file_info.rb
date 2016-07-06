@@ -5,6 +5,10 @@ module Wopinator
     class EmptyPropertyError < StandardError; end
 
     module Extension
+      def any?
+        to_h.any?
+      end
+
       def to_json
         validate!
         to_h.to_json

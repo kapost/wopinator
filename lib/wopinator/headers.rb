@@ -1,23 +1,38 @@
 module Wopinator
   class Headers
     include Enumerable
-    MATCH = /^HTTP_X_WOPI_/.freeze
 
-    def initialize(request)
-      @_data = parse(request)
+    PREFIX = 'X-WOPI-'.freeze
+    LOCK = "#{PREFIX}Lock".freeze
+    OLD_LOCK = "#{PREFIX}OldLock".freeze
+
+    def initialize(request = nil)
+      if request
+        self.data = parse(request)
+      else
+        self.data = {}
+      end
     end
 
     def get(name)
-      @_data[name]
+      data[name]
+    end
+
+    def set(name, value)
+      data[name] = value.to_s
     end
 
     def each
-      @_data.each do |k, v|
+      data.each do |k, v|
         yield k, v
       end
     end
 
     private
+
+    MATCH = /^(HTTP[-_])?X[-_]WOPI[-_]/i.freeze
+
+    attr_accessor :data
 
     def parse(request)
       {}.tap do |hash|

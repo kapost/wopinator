@@ -15,11 +15,11 @@ module Wopinator
     end
 
     def get(name)
-      data[name]
+      data[name.to_sym]
     end
 
     def set(name, value)
-      data[name] = value.to_s
+      data[name.to_sym] = value.to_s
     end
 
     def each

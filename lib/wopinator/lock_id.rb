@@ -24,10 +24,6 @@ module Wopinator
       to_s == other.to_s
     end
 
-    def !=(other)
-      to_s != other.to_s
-    end
-
     def to_s
       id
     end

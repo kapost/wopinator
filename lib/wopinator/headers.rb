@@ -5,6 +5,7 @@ module Wopinator
     PREFIX = 'X-WOPI-'.freeze
     LOCK = "#{PREFIX}Lock".freeze
     OLD_LOCK = "#{PREFIX}OldLock".freeze
+    ITEM_VERSION = "#{PREFIX}ItemVersion".freeze
 
     def initialize(request = nil)
       if request

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wopinator (0.0.4)
+    wopinator (0.0.5)
       addressable (>= 2.4.0)
       httparty
       json

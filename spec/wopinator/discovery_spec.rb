@@ -51,6 +51,14 @@ RSpec.describe Wopinator::Discovery do
   end
 
   context '.resolve' do
+    it 'should return an empty action url if no extension was provided' do
+      metadata = subject.resolve('editnew', nil)
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).to be_nil
+      expect(metadata.action_url).to be_nil
+    end
+
     it 'should return app metadata by action name and extension' do
       metadata = subject.resolve('view', 'wopitest', src)
 

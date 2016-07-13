@@ -69,9 +69,12 @@ module Wopinator
 
     def find_app_and_action(name, ext)
       action = nil
+      app = nil
 
-      app = apps.detect do |a|
-        action = find_action(a, name, ext)
+      if name && ext
+        app = apps.detect do |a|
+          action = find_action(a, name, ext)
+        end
       end
 
       [app, action]

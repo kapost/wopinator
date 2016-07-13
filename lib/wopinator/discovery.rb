@@ -119,13 +119,16 @@ module Wopinator
     end
 
     def xml
-      @_xml ||= Xml.parse(raw_xml)
+      @_xml ||= Xml.parse(raw_xml.to_s)
     end
 
     def raw_xml
-      @_raw_xml ||= cache.fetch(CACHE_KEY, expires_in: expires_in) do
-        HTTPClient.get(url).body
-      end
+      @_raw_xml ||= cache.fetch(CACHE_KEY, expires_in: expires_in) { fetch_raw_xml }
+    end
+
+    def fetch_raw_xml
+      response = HTTPClient.get(url)
+      response.code == 200 ? response.body : nil
     end
 
     def default_env

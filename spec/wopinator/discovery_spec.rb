@@ -7,6 +7,15 @@ RSpec.describe Wopinator::Discovery do
     allow(Wopinator::HTTPClient).to receive(:get).at_most(:twice).with(subject.url).and_return(response)
   end
 
+  context 'discovery xml is not available' do
+    let(:response) { double(:response, code: 404) }
+
+    it 'should not crash' do
+      expect(subject.apps).not_to be_nil
+      expect(subject.apps.size).to eql(0)
+    end
+  end
+
   context '.proof_key' do
     it 'should return proof key' do
       expect(subject.proof_key.modulus).to be_an(Integer)

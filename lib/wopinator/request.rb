@@ -59,6 +59,8 @@ module Wopinator
         :put_relative_file
       when :put
         :put_file
+      when :delete
+        :delete_file
       when :lock
         if lock.old_id.empty?
           :lock

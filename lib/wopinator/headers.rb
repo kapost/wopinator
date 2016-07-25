@@ -6,6 +6,12 @@ module Wopinator
     LOCK = "#{PREFIX}Lock".freeze
     OLD_LOCK = "#{PREFIX}OldLock".freeze
     ITEM_VERSION = "#{PREFIX}ItemVersion".freeze
+    PROOF = "#{PREFIX}Proof".freeze
+    PROOF_OLD = "#{PREFIX}ProofOld".freeze
+    TIMESTAMP = "#{PREFIX}Timestamp".freeze
+    OVERRIDE = "#{PREFIX}Override".freeze
+    SUGGESTED_TARGET = "#{PREFIX}SuggestedTarget".freeze
+    RELATIVE_TARGET = "#{PREFIX}RelativeTarget".freeze
 
     def initialize(request = nil)
       if request

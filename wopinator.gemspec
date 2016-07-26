@@ -22,6 +22,7 @@ Gem::Specification.new do |s|
   s.add_dependency 'rake', '>= 10.0'
   s.add_dependency 'addressable', '>= 2.4.0'
 
+  s.add_development_dependency 'codeclimate-test-reporter'
   s.add_development_dependency 'bundler', '~> 1.11'
   s.add_development_dependency 'rspec', '~> 3.4'
   s.add_development_dependency 'rspec-its'

@@ -1,5 +1,8 @@
 Wopinator
 =========
+[![Code Climate](https://codeclimate.com/github/kapost/wopinator/badges/gpa.svg)](https://codeclimate.com/github/kapost/wopinator)
+[![Test Coverage](https://codeclimate.com/github/kapost/wopinator/badges/coverage.svg)](https://codeclimate.com/github/kapost/wopinator/coverage)
+
 A collection of helpers for interacting with Microsoft's WOPI.
 
 Contribute

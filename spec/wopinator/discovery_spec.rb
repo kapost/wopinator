@@ -78,6 +78,48 @@ RSpec.describe Wopinator::Discovery do
       expect(metadata.action_url).to include('contoso.com')
     end
 
+    it 'should preserve certain placeholder query parameters in the action url' do
+      metadata = subject.resolve('editnew', 'pptx', src, { 'BUSINESS_USER' => '1' })
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+
+      expected_query = { 'New' => '1', 'PowerPointView' => 'EditView', 'WOPISrc' => src, 'IsLicensedUser' => '1' }
+      query = Addressable::URI.parse(metadata.action_url).query_values
+
+      expect(query).to be_an(Hash)
+      expect(query.size).to eql(4)
+      expect(query).to include(expected_query)
+
+      metadata = subject.resolve('edit', 'docx', src, { 'BUSINESS_USER' => '1' })
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+
+      expected_query = { 'WOPISrc' => src, 'IsLicensedUser' => '1' }
+      query = Addressable::URI.parse(metadata.action_url).query_values
+
+      expect(query).to be_an(Hash)
+      expect(query.size).to eql(2)
+      expect(query).to include(expected_query)
+
+      metadata = subject.resolve('view', 'wopitest', src, { 'BUSINESS_USER' => '1', 'VALIDATOR_TEST_CATEGORY' => 'test' })
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+
+      expected_query = { 'WOPISrc' => src, 'testcategory' => 'test' }
+
+      query = Addressable::URI.parse(metadata.action_url).query_values
+
+      expect(query).to be_an(Hash)
+      expect(query.size).to eql(2)
+      expect(query).to include(expected_query)
+    end
+
     it 'should remove placeholder query parameters from action url' do
       metadata = subject.resolve('editnew', 'pptx', src)
 

@@ -37,12 +37,12 @@ module Wopinator
       @_apps ||= locate(:wopi_discovery, :net_zone, :apps)
     end
 
-    def resolve(name, ext, src = nil)
+    def resolve(name, ext, src = nil, params = {})
       resolve_cache["#{name}_#{ext}_#{src.nil?}"] ||= OpenStruct.new.tap do |s|
         app, action = find_app_and_action(name, ext)
         if app && action
           s.favicon_url = format_favicon_url(app)
-          s.action_url = format_action_url(action, src)
+          s.action_url = format_action_url(action, src, params)
         end
       end
     end
@@ -88,20 +88,41 @@ module Wopinator
       app.favIconUrl || app.fav_icon_url
     end
 
-    def format_action_url(action, src = nil)
+    def format_action_url(action, src = nil, params = {})
+      filtered_params = filter_action_query_params(action.urlsrc, params)
+
       uri = parse_url(action.urlsrc)
-      uri.query_values = format_action_query(uri.query_values, src)
+      uri.query_values = format_action_query(uri.query_values, src, filtered_params)
       uri.to_s
     end
 
-    def format_action_query(query, src = nil)
+    def format_action_query(query, src = nil, params = {})
       query ||= {}
+      query.merge!(params)
       query['WOPISrc'] = src if src
       query.any? ? query : nil
     end
 
     def parse_url(url)
       Addressable::URI.parse(url.gsub(/&#38;/, '&').gsub(/<.*?=.*?>/, '').gsub(/(\?|&)$/, ''))
+    end
+
+    def filter_action_query_params(url, params)
+      return {} unless params.any?
+
+      supported = extract_supported_action_query_params(url)
+
+      {}.tap do |hash|
+        params.each do |k, v|
+          if key = supported[k]
+            hash[key] = v
+          end
+        end
+      end
+    end
+
+    def extract_supported_action_query_params(url)
+      Hash[url.gsub(/&#38;/, '&').scan(/<(.*?=.*?)>/).map { |m| m.first.chomp('&').split('=').reverse }]
     end
 
     def proof_keys

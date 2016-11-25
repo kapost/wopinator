@@ -17,4 +17,12 @@ RSpec.describe Wopinator::Sanitizer do
       expect(subject.sanitize(filename)).to eql(sanitized_filename)
     end
   end
+
+  context '#decode_sanitize' do
+    let(:decoded_sanitized_filename) { 'demo__filename___' }
+
+    it 'should decode and sanitize' do
+      expect(subject.decode_sanitize(filename)).to eql(decoded_sanitized_filename)
+    end
+  end
 end

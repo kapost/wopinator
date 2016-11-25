@@ -10,6 +10,10 @@ module Wopinator
         s.gsub(/\+([A-Za-z0-9\/]*)-?/) { decode_chunk(Regexp.last_match[1]) }
       end
 
+      def decode_sanitize(s)
+        sanitize(decode(s))
+      end
+
       private
 
       def decode_chunk(c)

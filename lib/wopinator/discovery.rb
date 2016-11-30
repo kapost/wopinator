@@ -121,6 +121,22 @@ module Wopinator
       end
     end
 
+    #
+    # Extracts placeholder action query params into a Hash.
+    #
+    # Input
+    #
+    #   https://excel.officeapps-df.live.com/x/_layouts/xlviewerinternal.aspx?&lt;ui=UI_LLCC&amp;&gt;&lt;rs=DC_LLCC&amp;&gt;&lt;dchat=DISABLE_CHAT&amp;&gt;&lt;IsLicensedUser=BUSINESS_USER&amp;&gt;
+    #
+    # Output
+    #
+    #   {
+    #     'UI_LLCC' => 'ui',
+    #     'DC_LLCC' => 'rs',
+    #     'DISABLE_CHAT' => 'dchat',
+    #     'BUSINESS_USER' => 'IsLicensedUser'
+    #   }
+    #
     def extract_supported_action_query_params(url)
       Hash[url.gsub(/&#38;/, '&').scan(/<(.*?=.*?)>/).map { |m| m.first.chomp('&').split('=').reverse }]
     end

@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    wopinator (0.0.9)
+    wopinator (0.1.0)
       addressable (>= 2.4.0)
       httparty
       json
@@ -17,8 +17,7 @@ GEM
       simplecov (>= 0.7.1, < 1.0.0)
     diff-lcs (1.2.5)
     docile (1.1.5)
-    httparty (0.13.7)
-      json (~> 1.8)
+    httparty (0.14.0)
       multi_xml (>= 0.5.2)
     json (1.8.3)
     mini_portile2 (2.1.0)
@@ -28,7 +27,7 @@ GEM
       pkg-config (~> 1.1.7)
     nori (2.6.0)
     pkg-config (1.1.7)
-    rake (11.2.2)
+    rake (11.3.0)
     rspec (3.4.0)
       rspec-core (~> 3.4.0)
       rspec-expectations (~> 3.4.0)
@@ -66,4 +65,4 @@ DEPENDENCIES
   wopinator!
 
 BUNDLED WITH
-   1.12.5
+   1.13.1

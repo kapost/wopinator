@@ -13,6 +13,7 @@ module Wopinator
     SUGGESTED_TARGET = "#{PREFIX}SuggestedTarget".freeze
     RELATIVE_TARGET = "#{PREFIX}RelativeTarget".freeze
     OVERWRITE_RELATIVE_TARGET = "#{PREFIX}OverwriteRelativeTarget".freeze
+    REQUESTED_NAME = "#{PREFIX}RequestedName".freeze
 
     def initialize(request = nil)
       if request

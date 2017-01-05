@@ -433,7 +433,10 @@
       urlsrc="https://onenote.officeapps-df.live.com/hosting/WopiTestFrame.aspx?&lt;testcategory=VALIDATOR_TEST_CATEGORY&gt;" />
       <action name="getinfo" ext="wopitest"
       urlsrc="https://onenote.officeapps-df.live.com/hosting/GetWopiTestInfo.ashx?&lt;testcategory=VALIDATOR_TEST_CATEGORY&gt;" />
-    </app>
+	</app>
+	<app name="Whiteboard" favIconUrl="https://onenote.officeapps-df.live.com/p/resources/1033/FavIcon_Ppt.ico" checkLicense="true">
+		<action name="view" ext="wbx" default="true" requires="cobalt,containers" urlsrc="https://onenote.officeapps-df.live.com/o/whiteboardframe.aspx?edit=0&amp;wb=1&amp;&lt;ui=UI_LLCC&amp;&gt;&lt;rs=DC_LLCC&amp;&gt;&lt;dchat=DISABLE_CHAT&amp;&gt;&lt;showpagestats=PERFSTATS&amp;&gt;" />
+	</app>
     <app name="Word"
     favIconUrl="https://word-view.officeapps-df.live.com/wv/resources/1033/FavIcon_Word.ico"
     checkLicense="true">

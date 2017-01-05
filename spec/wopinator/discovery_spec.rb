@@ -78,6 +78,16 @@ RSpec.describe Wopinator::Discovery do
       expect(metadata.action_url).to include('contoso.com')
     end
 
+    it 'should return app metadata by action and extension when only one action is present' do
+      metadata = subject.resolve('view', 'wbx', src)
+
+      expect(metadata).not_to be_nil
+      expect(metadata.favicon_url).not_to be_nil
+      expect(metadata.action_url).not_to be_nil
+      expect(metadata.action_url).to include('whiteboardframe.aspx')
+      expect(metadata.action_url).to include('contoso.com')
+    end
+
     it 'should preserve certain placeholder query parameters in the action url' do
       metadata = subject.resolve('editnew', 'pptx', src, { 'BUSINESS_USER' => '1' })
 

@@ -34,7 +34,7 @@ module Wopinator
     end
 
     def apps
-      @_apps ||= locate(:wopi_discovery, :net_zone, :apps)
+      @_apps ||= locate(:wopi_discovery, :net_zone, :apps).map { |app| format_app(app) }
     end
 
     def resolve(name, ext, src = nil, params = {})
@@ -119,6 +119,11 @@ module Wopinator
           end
         end
       end
+    end
+
+    def format_app(app)
+      app.actions = Array(app.action) if app.actions.nil?
+      app
     end
 
     #

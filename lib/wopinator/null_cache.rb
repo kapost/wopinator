@@ -1,10 +1,10 @@
 module Wopinator
   class NullCache
-    def fetch(key, options = {})
+    def fetch(_key, _options = {})
       yield
     end
 
-    def delete(key)
+    def delete(_key)
       true
     end
   end

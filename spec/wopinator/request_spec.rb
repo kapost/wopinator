@@ -147,6 +147,14 @@ RSpec.describe Wopinator::Request do
           expect(subject.action).to eql(:unlock)
         end
       end
+
+      context 'when put delete'  do
+        let(:env) { default_env.merge('HTTP_X_WOPI_OVERRIDE' => 'DELETE') }
+
+        it 'should return delete file' do
+          expect(subject.action).to eql(:delete_file)
+        end
+      end
     end
   end
 end

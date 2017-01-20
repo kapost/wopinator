@@ -14,6 +14,14 @@ RSpec.describe Wopinator::Headers do
 
   let(:request) { double(:request, env: env) }
 
+  context 'with no request' do
+    let(:request) { nil }
+
+    it 'should have no data' do
+      expect(subject.count).to eql(0)
+    end
+  end
+
   context 'parsing headers' do
     context 'when HTTP is missing' do
       let(:env) { {'X_WOPI_PROOF' => proof } }

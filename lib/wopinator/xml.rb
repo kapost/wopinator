@@ -11,11 +11,15 @@ module Wopinator
 
       private
 
+      def parser_class
+        Nori
+      end
+
       def try_parse(xml)
-        if Nori.respond_to?(:new)
-          Nori.new(parser: :nokogiri).parse(xml)
+        if parser_class.respond_to?(:parse)
+          parser_class.parse(xml, :nokogiri)
         else
-          Nori.parse(xml, :nokogiri)
+          parser_class.new(parser: :nokogiri).parse(xml)
         end
       end
 

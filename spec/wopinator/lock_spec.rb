@@ -22,14 +22,32 @@ RSpec.describe Wopinator::Lock do
     end
   end
 
+  context 'integer timestamp' do
+    let(:timestamp) { time.to_i }
+
+    it 'should be converted' do
+      expect(subject.id).to be_an(Wopinator::LockId)
+      expect(subject.old_id).to be_an(Wopinator::LockId)
+      expect(subject.timestamp).to be_an(Time)
+    end
+  end
+
   context 'comparison' do
     context 'when they are same' do
+      it 'and compared directly should return true' do
+        expect(subject == described_class.new(id, nil, timestamp)).to be_truthy
+      end
+
       it 'should return true' do
         expect(subject).to eql(described_class.new(id, nil, timestamp))
       end
     end
 
     context 'when they are different' do
+      it 'and compared directly should return true' do
+        expect(subject != described_class.new('newid', nil, timestamp)).to be_truthy
+      end
+
       it 'should return true' do
         expect(subject).not_to eql(described_class.new('newid', nil, timestamp))
       end

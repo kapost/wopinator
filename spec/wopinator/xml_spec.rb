@@ -20,5 +20,38 @@ RSpec.describe Wopinator::Xml do
       expect(result.wopi_discovery.net_zone.apps.last.actions.size).not_to eql(0)
       expect(result.wopi_discovery.net_zone.apps.last.actions.first.name).to eql('view')
     end
+
+    context 'with older nori' do
+      let(:older_nori) do
+        Class.new(Nori) do
+          class << self
+            def parse(xml, parser)
+              new(parser: parser).parse(xml)
+            end
+          end
+        end
+      end
+
+      before do
+        allow(subject).to receive(:parser_class).and_return(older_nori)
+      end
+
+      it 'should parse xml' do
+        result = subject.parse(xml)
+        expect(result).to be_an(OpenStruct)
+        expect(result.wopi_discovery).not_to be_nil
+        expect(result.wopi_discovery.proof_key).not_to be_nil
+        expect(result.wopi_discovery.proof_key.value).to eql(value)
+        expect(result.wopi_discovery.net_zone).not_to be_nil
+        expect(result.wopi_discovery.net_zone.apps).not_to be_nil
+        expect(result.wopi_discovery.net_zone.apps.size).not_to eql(0)
+        expect(result.wopi_discovery.net_zone.apps.first.actions).not_to be_nil
+        expect(result.wopi_discovery.net_zone.apps.first.actions.size).not_to eql(0)
+        expect(result.wopi_discovery.net_zone.apps.first.actions.first.name).to eql('view')
+        expect(result.wopi_discovery.net_zone.apps.last.actions).not_to be_nil
+        expect(result.wopi_discovery.net_zone.apps.last.actions.size).not_to eql(0)
+        expect(result.wopi_discovery.net_zone.apps.last.actions.first.name).to eql('view')
+      end
+    end
   end
 end

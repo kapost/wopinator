@@ -14,6 +14,8 @@ module Wopinator
     RELATIVE_TARGET = "#{PREFIX}RelativeTarget".freeze
     OVERWRITE_RELATIVE_TARGET = "#{PREFIX}OverwriteRelativeTarget".freeze
     REQUESTED_NAME = "#{PREFIX}RequestedName".freeze
+    FILE_CONVERSION = "#{PREFIX}FileConversion".freeze
+    SIZE = "#{PREFIX}Size".freeze
 
     def initialize(request = nil)
       if request

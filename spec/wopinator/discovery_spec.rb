@@ -64,6 +64,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('editnew', nil)
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).to be_nil
       expect(metadata.favicon_url).to be_nil
       expect(metadata.action_url).to be_nil
     end
@@ -72,6 +73,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('view', 'wopitest', src)
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).to eq 'WopiTest'
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
       expect(metadata.action_url).to include('WopiTestFrame.aspx')
@@ -82,6 +84,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('view', 'wbx', src)
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).not_to be_nil
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
       expect(metadata.action_url).to include('whiteboardframe.aspx')
@@ -92,6 +95,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('editnew', 'pptx', src, { 'BUSINESS_USER' => '1' })
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).not_to be_nil
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
 
@@ -118,6 +122,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('view', 'wopitest', src, { 'BUSINESS_USER' => '1', 'VALIDATOR_TEST_CATEGORY' => 'test' })
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).not_to be_nil
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
 
@@ -134,6 +139,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('editnew', 'pptx', src)
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).not_to be_nil
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
 
@@ -147,6 +153,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('view', 'wopitest', src)
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).not_to be_nil
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
 
@@ -161,6 +168,7 @@ RSpec.describe Wopinator::Discovery do
       metadata = subject.resolve('edit', 'docx')
 
       expect(metadata).not_to be_nil
+      expect(metadata.app_name).not_to be_nil
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
 

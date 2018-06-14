@@ -41,6 +41,7 @@ module Wopinator
       resolve_cache["#{name}_#{ext}_#{src.nil?}"] ||= OpenStruct.new.tap do |s|
         app, action = find_app_and_action(name, ext)
         if app && action
+          s.app_name = app.name
           s.favicon_url = format_favicon_url(app)
           s.action_url = format_action_url(action, src, params)
         end

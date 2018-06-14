@@ -1,3 +1,4 @@
 *.gem
 .project
 Gemfile.lock
+coverage/

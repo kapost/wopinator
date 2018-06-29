@@ -35,7 +35,7 @@ module Wopinator
     end
 
     def verify(proof, old_proof, proof_key, old_proof_key)
-      return false if proof == old_proof || timestamp.older_than_twenty_minutes?
+      return false if timestamp.older_than_twenty_minutes?
 
       proof_key.verify(proof, self) ||
       proof_key.verify(old_proof, self) ||

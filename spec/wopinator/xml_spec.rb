@@ -13,12 +13,14 @@ RSpec.describe Wopinator::Xml do
       expect(result.wopi_discovery.net_zone).not_to be_nil
       expect(result.wopi_discovery.net_zone.apps).not_to be_nil
       expect(result.wopi_discovery.net_zone.apps.size).not_to eql(0)
+      expect(result.wopi_discovery.net_zone.apps.first.name).to eql('Excel')
       expect(result.wopi_discovery.net_zone.apps.first.actions).not_to be_nil
       expect(result.wopi_discovery.net_zone.apps.first.actions.size).not_to eql(0)
       expect(result.wopi_discovery.net_zone.apps.first.actions.first.name).to eql('view')
+      expect(result.wopi_discovery.net_zone.apps.last.name).to eql('WordPrague')
       expect(result.wopi_discovery.net_zone.apps.last.actions).not_to be_nil
       expect(result.wopi_discovery.net_zone.apps.last.actions.size).not_to eql(0)
-      expect(result.wopi_discovery.net_zone.apps.last.actions.first.name).to eql('view')
+      expect(result.wopi_discovery.net_zone.apps.last.actions.first.name).to eql('editnew')
     end
 
     context 'with older nori' do
@@ -45,12 +47,14 @@ RSpec.describe Wopinator::Xml do
         expect(result.wopi_discovery.net_zone).not_to be_nil
         expect(result.wopi_discovery.net_zone.apps).not_to be_nil
         expect(result.wopi_discovery.net_zone.apps.size).not_to eql(0)
+        expect(result.wopi_discovery.net_zone.apps.first.name).to eql('Excel')
         expect(result.wopi_discovery.net_zone.apps.first.actions).not_to be_nil
         expect(result.wopi_discovery.net_zone.apps.first.actions.size).not_to eql(0)
         expect(result.wopi_discovery.net_zone.apps.first.actions.first.name).to eql('view')
+        expect(result.wopi_discovery.net_zone.apps.last.name).to eql('WordPrague')
         expect(result.wopi_discovery.net_zone.apps.last.actions).not_to be_nil
         expect(result.wopi_discovery.net_zone.apps.last.actions.size).not_to eql(0)
-        expect(result.wopi_discovery.net_zone.apps.last.actions.first.name).to eql('view')
+        expect(result.wopi_discovery.net_zone.apps.last.actions.first.name).to eql('editnew')
       end
     end
   end

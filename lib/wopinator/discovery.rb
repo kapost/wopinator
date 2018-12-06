@@ -13,7 +13,7 @@ module Wopinator
     URLS =
     {
       production: 'https://onenote.officeapps.live.com/hosting/discovery',
-      test:       'https://onenote.officeapps-df.live.com/hosting/discovery'
+      test:       'https://ffc-onenote.officeapps.live.com/hosting/discovery'
     }.freeze
 
     attr_reader :url, :env, :cache, :expires_in

@@ -126,12 +126,12 @@ RSpec.describe Wopinator::Discovery do
       expect(metadata.favicon_url).not_to be_nil
       expect(metadata.action_url).not_to be_nil
 
-      expected_query = { 'WOPISrc' => src, 'testcategory' => 'test' }
+      expected_query = { 'WOPISrc' => src, 'IsLicensedUser' => '1', 'testcategory' => 'test' }
 
       query = Addressable::URI.parse(metadata.action_url).query_values
 
       expect(query).to be_an(Hash)
-      expect(query.size).to eql(2)
+      expect(query.size).to eql(3)
       expect(query).to include(expected_query)
     end
 

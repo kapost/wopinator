@@ -5,12 +5,13 @@ module Wopinator
   class Lock
     EXPIRES_IN = 1800.freeze # 30 minutes
 
-    attr_reader :id, :old_id, :timestamp
+    attr_reader :id, :old_id, :timestamp, :expires_in
 
-    def initialize(id, old_id = nil, timestamp = Time.now)
+    def initialize(id, old_id = nil, timestamp = Time.now, expires_in = EXPIRES_IN)
       self.id = id
       self.old_id = old_id
       self.timestamp = timestamp
+      self.expires_in = expires_in
     end
 
     def eql?(lock)
@@ -53,7 +54,7 @@ module Wopinator
     end
 
     def expired?
-      (timestamp + EXPIRES_IN) < Time.now
+      (timestamp + expires_in) < Time.now
     end
 
     def empty?
@@ -78,6 +79,8 @@ module Wopinator
 
     private
 
+    attr_writer :expires_in
+
     def parse_timestamp(timestamp)
       if timestamp.is_a?(Time)
         timestamp
@@ -86,7 +89,7 @@ module Wopinator
       elsif timestamp.is_a?(Integer)
         Time.at(timestamp)
       else
-        Time.now - EXPIRES_IN
+        Time.now - expires_in
       end
     end
   end

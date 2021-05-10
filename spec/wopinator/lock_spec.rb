@@ -55,7 +55,7 @@ RSpec.describe Wopinator::Lock do
 
     context 'when does not have old id' do
       let(:id) { 'newoldid' }
-      
+
       it 'should return true' do
         expect(subject).to eql(described_class.new('newid', 'newoldid', timestamp))
       end
@@ -131,7 +131,7 @@ RSpec.describe Wopinator::Lock do
   context '.touch!' do
     it 'should update timestamp' do
       expect(subject.timestamp).to eql(time)
-     
+
       Timecop.return
       subject.touch!
 
@@ -144,12 +144,33 @@ RSpec.describe Wopinator::Lock do
       it 'should return false' do
         expect(subject.expired?).to be_falsy
       end
+
+      context 'expires in explicitly passed in' do
+        let(:expires_in) { 3600 }
+
+        subject { described_class.new(id, old_id, timestamp, expires_in) }
+
+        it 'should return false' do
+          expect(subject.expired?).to be_falsy
+        end
+      end
     end
 
     context 'when is expired' do
       it 'should return true' do
         Timecop.return
         expect(subject.expired?).to be_truthy
+      end
+
+      context 'expires in explicitly passed in' do
+        let(:expires_in) { 3600 }
+
+        subject { described_class.new(id, old_id, timestamp, expires_in) }
+
+        it 'should return true' do
+          Timecop.return
+          expect(subject.expired?).to be_truthy
+        end
       end
     end
   end

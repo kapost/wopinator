@@ -10,8 +10,8 @@ module Wopinator
     def initialize(id, old_id = nil, timestamp = Time.now, expires_in = EXPIRES_IN)
       self.id = id
       self.old_id = old_id
-      self.timestamp = timestamp
       self.expires_in = expires_in
+      self.timestamp = timestamp
     end
 
     def eql?(lock)
